@@ -1,3 +1,36 @@
 <template>
-    
+    <lightning-card>
+        <div class="slds-var-p-around_medium">
+            <div class ='slds-var-p-around_medium'>
+                <lightning-input 
+                type="search"
+                    onchange={fetchBooksHandler}
+                    label="Search Books"
+                    value={query}
+                    name="enter-search" >
+                </lightning-input>
+            </div>
+            <lightning-layout multiple-rows>
+                <template if:true={books}>
+                    <template for:each={books.items} for:item="book">
+                        <lightning-layout-item size="3" padding="around-small" key={book.id}>
+                            <div class="slds-box slds-var-p-around_medium">
+                                <template if:true={book.volumeInfo.imageLinks}>
+                                    <img src={book.volumeInfo.imageLinks.smallThumbnail} height="200px"/>
+                                </template> 
+                                <template if:false={book.volumeInfo.imageLinks}>
+                                    #################
+                                    Image Unavailable
+                                    #################
+                                </template>                                     
+                                <div class="slds-text-heading_small" > <strong>{book.volumeInfo.title}</strong></div>
+                                <div><strong>Published Date : {book.volumeInfo.publishedDate}</strong></div>
+                                <div><strong>Average Rating :{book.volumeInfo.averageRating}</strong></div>
+                            </div>
+                        </lightning-layout-item>
+                    </template>
+                </template>
+            </lightning-layout>
+        </div>
+    </lightning-card>
 </template>
